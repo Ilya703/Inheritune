@@ -52,15 +52,9 @@
 
 Для оценки использовали библиотеку lm-eval-harness ([https://github.com/EleutherAI/lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness)), написали обертку-класс и измеряли zero-shot accuracy
 
-**![](https://lh7-rt.googleusercontent.com/slidesz/AGV_vUf2JuZ18M37PurqqslbajZzUQ-IuY2LLTzDlkIOfX7GCLk8vcllewQOlp7uMJp5PrGAPxP4ruv35ByAVYzhoTrQOToC56KuiJOFol9zJQpriCIEaXhA8xzoQ2t0BiUnFOh39lv2usntJBRiJKISW6UJFVHAPPHi=s2048?key=d-35EwHvnTAy0h7zxhSG6g)**
-
-**![](https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdoI9Zi8_tfgGzGH3-W_kPnu1eustGI3rrabi00QL2O9tVlASO23Di6haFBakKEzU_GodFX_VSRABQ3Ygm-17x_S9Xj7gnDGLGRKyfkRjF1wMN1HILptd3Q70uacQwxdZeVqlGjN7mcbxpIRat7dUggPbVSsBTq=s2048?key=d-35EwHvnTAy0h7zxhSG6g)**
-
 ## Использованные датасеты
 
 Мы взяли 3 датасета из статьи для оценки : boolq, winogrand, piqa. Для обучения брали датасеты wikipedia и bookcorpus (по 0.1%)
-
-![](https://lh7-rt.googleusercontent.com/slidesz/AGV_vUeY4VJjbvkdHIOKHEfOaY4EikBL4BzCTAp5NEnZCPAyRS4HseIyLJKyxspFpJzeKTZZ28cDm0hhIxKNqoLhsjn-B42_g9uy18FIlScZt3hT5jNQzi5FP13eBq7En5jR2ghgprueOcFXi34cM0ICFGuTmzd9WsNb=s2048?key=d-35EwHvnTAy0h7zxhSG6g)
 
 ## Llama: наследование без обучения
 
@@ -68,9 +62,7 @@
 
 Наследовали 6 слоев из 26 в силу ограниченных ресурсов
 
-Обучали модели на Kaggle и Yandex DataSphere
-
-![](https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdB2VTQ522iJq-2CTIHD2zcJz3YKdPZaWHI2NPdb6pknFiio5cY9Gil90buQaA0pUfgO04Kz2PRGk6rDfqSdypf17RgMsQ8lX9F6ylHJh3pzYSpiC8STasiSFRhBanctzVuODBpDaJIp7pkQNkk6-jHjBIgQs7D=s2048?key=d-35EwHvnTAy0h7zxhSG6g)
+Обучение моделей произовдилось с помощью вычислительных ресурсов Kaggle и Yandex DataSphere
 
 ## Inheritune
 
@@ -90,8 +82,6 @@ Epoch: 6
 
 В методе distillation_loss использовали KL дивергенцию, которая учитывает не только таргеты, но и предсказания модели-учителя
 
-**![](https://lh7-rt.googleusercontent.com/slidesz/AGV_vUfnARr2SqMMWMMsBwSDbraJpkLAU5TrIhugMq7tMjhRob0eUEUgfb9d9FDm5leBlnBeKZlBSv4OgeGZkX3wABD8aeKijaWzcNTvj9jVyFIIdGE1wFW9lYjh6sPtWiiW8gEcuMnUY6A0JFt705woHSHhAo-Wh2dJ=s2048?key=d-35EwHvnTAy0h7zxhSG6g)**
-
 Взяли 6 блоков: первый, последний и 4 промежуточных между ними
 
 Learning rate: 3e-5
@@ -100,9 +90,7 @@ Learning rate: 3e-5
 
 Batch size: 8
 
-**![](https://lh7-rt.googleusercontent.com/slidesz/AGV_vUf-zsZsaq8Sj2QENX7wEAMKoI9Khcj8FCwHzt0FUezTCnY6p_Goo-AiQivcWfFPA7cVqkecxCtO52_j3IXG20JxwF3sh7kj7lSWUGfIFlI3Hbrn3-8z95sbgeXUPVQ5DyjtqiR17eY-azZb8dI6xUmevZpusk78=s2048?key=d-35EwHvnTAy0h7zxhSG6g)**
-
-Использовали 5 эпох, при которых обучение занимало 72 часа. В силу ограниченности ресурсов не удалось до конца обучить модели методом дистилляции. Пришли к выводу, что в положении, когда ограничены время и русурсы, метод Inheritune значительно опережает метод дистилляции
+Использовали 5 эпох, при которых обучение занимало 72 часа. В силу ограниченности ресурсов не удалось до конца обучить модели методом дистилляции. Пришли к выводу, что в положении, когда ограничены время и ресурсы, метод Inheritune значительно опережает метод дистилляции
 
 ## Результаты исследования
 
