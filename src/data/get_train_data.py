@@ -2,21 +2,21 @@ from datasets import load_dataset, concatenate_datasets
 from src.utils.dataset import filter_dataset
 from src.utils.tokenizer import tokenize_function
 from src.data.custom_dataset import CustomDataset
-from config import DatasetConfig
+from config import dataset_config
 
 def get_train_data():
     wikipedia_dataset = load_dataset(
-        DatasetConfig.wikipedia_dataset_name,
-        DatasetConfig.wikipedia_dataset_version,
-        split=DatasetConfig.dataset_split
+        dataset_config.wikipedia_dataset_name,
+        dataset_config.wikipedia_dataset_version,
+        split=dataset_config.dataset_split
     )
     bookcorpus_dataset = load_dataset(
-        DatasetConfig.bookcorpus_dataset_name,
-        split=DatasetConfig.dataset_split
+        dataset_config.bookcorpus_dataset_name,
+        split=dataset_config.dataset_split
     )
 
-    wikipedia_dataset_filtered = filter_dataset(wikipedia_dataset, DatasetConfig.filter_threshold)
-    bookcorpus_dataset_filtered = filter_dataset(bookcorpus_dataset, DatasetConfig.filter_threshold)
+    wikipedia_dataset_filtered = filter_dataset(wikipedia_dataset, dataset_config.filter_threshold)
+    bookcorpus_dataset_filtered = filter_dataset(bookcorpus_dataset, dataset_config.filter_threshold)
 
     tokenized_wikipedia_dataset = wikipedia_dataset_filtered.map(
         tokenize_function,

@@ -4,3 +4,6 @@ datasets
 transformers
 pydantic
 typing
+accelerate
+numpy
+random
