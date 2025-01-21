@@ -2,15 +2,16 @@ from transformers import (
     LlamaForCausalLM,
     AutoConfig,
 )
+from config import PrepareConfig, ParentModelConfig
 
 def prepare_models():
-    parent_llama = LlamaForCausalLM.from_pretrained("openlm-research/open_llama_3b_v2")
+    parent_llama = LlamaForCausalLM.from_pretrained(ParentModelConfig.pretrained_model_name)
 
-    child_config = AutoConfig.from_pretrained("openlm-research/open_llama_3b_v2", num_hidden_layers=6)
-    layers = [0, 3, 10, 15, 22, 25]
+    child_config = AutoConfig.from_pretrained(ParentModelConfig.pretrained_model_name, num_hidden_layers=PrepareConfig.num_hidden_layers)
+    layers = PrepareConfig.layers
     child_llama = LlamaForCausalLM(child_config)
 
-    for i in range(6):
+    for i in range(PrepareConfig.num_hidden_layers):
         child_llama.model.layers[i].load_state_dict(parent_llama.model.layers[layers[i]].state_dict())
     
     return (child_llama, parent_llama)

@@ -1,9 +1,7 @@
-
 from transformers import LlamaTokenizer
+from config import TokenizerConfig, ParentModelConfig
 
-tokenizer=LlamaTokenizer.from_pretrained(
-        "openlm-research/open_llama_3b_v2",
-    )
+tokenizer=LlamaTokenizer.from_pretrained(ParentModelConfig.pretrained_model_name)
 tokenizer.pad_token_id = 0
 
 '''
@@ -15,6 +13,6 @@ def tokenize_function(examples):
         texts,
         return_special_tokens_mask=True,
         truncation=True,
-        max_length=2048,
+        max_length=TokenizerConfig.max_length,
         padding='max_length'
     )

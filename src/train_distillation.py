@@ -6,10 +6,11 @@ import torch
 from torch.utils.data import DataLoader
 from src.utils.tokenizer import tokenizer
 from transformers import AdamW
+from config import TrainDistillationConfig, TrainedModelConfig
 
-BATCH_SIZE = 8
-NUM_EPOCHS = 4
-STEP_LOG_PERIOD = 50
+BATCH_SIZE = TrainDistillationConfig.batch_size
+NUM_EPOCHS = TrainDistillationConfig.num_epochs
+STEP_LOG_PERIOD = TrainDistillationConfig.step_log_period
 
 def train():
     student_llama, teacher_llama = prepare_models()
@@ -22,7 +23,7 @@ def train():
     train_dataset = get_train_data()
 
     train_loader = DataLoader(dataset=train_dataset, batch_size=BATCH_SIZE, shuffle=True)
-    optimizer = AdamW(student_llama.parameters(), lr=3e-4)
+    optimizer = AdamW(student_llama.parameters(), lr=TrainDistillationConfig.lr)
 
     for _ in range(NUM_EPOCHS):
         student_llama.train()
@@ -32,7 +33,7 @@ def train():
                 teacher_outputs = teacher_llama(inputs).logits
             student_outputs = student_llama(inputs).logits
 
-            loss = distillation_loss(student_outputs, teacher_outputs, temperature=2.0)
+            loss = distillation_loss(student_outputs, teacher_outputs, temperature=TrainDistillationConfig.temperature)
             if (step % STEP_LOG_PERIOD == 0):
                 end_time = time.time()
                 execution_time = end_time - start_time
@@ -43,8 +44,8 @@ def train():
             optimizer.step()
             optimizer.zero_grad()
     
-    student_llama.save_pretrained("./distillation_llama")
-    tokenizer.save_pretrained("./open_llama_3b_v2_first_last_step")
+    student_llama.save_pretrained(TrainDistillationConfig.step_log_period)
+    tokenizer.save_pretrained(TrainedModelConfig.model_path)
 
 if __name__ == "__main__":
     train()

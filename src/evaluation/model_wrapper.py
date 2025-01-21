@@ -6,6 +6,7 @@ from lm_eval import BaseLM
 import torch
 from typing import List
 import gc
+from config import WrapperConfig
 
 class ModelWrapper(BaseLM):
     def __init__(
@@ -59,7 +60,7 @@ class ModelWrapper(BaseLM):
 
     @property
     def max_gen_toks(self):
-        return 256
+        return WrapperConfig.max_toks
 
     @property
     def max_length(self):

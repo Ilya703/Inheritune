@@ -2,3 +2,5 @@ git+https://github.com/EleutherAI/lm-evaluation-harness@115206dc89dad67b8beaa900
 torch
 datasets
 transformers
+pydantic
+typing

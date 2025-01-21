@@ -4,14 +4,17 @@ from typing import List
 from src.evaluation.model_wrapper import ModelWrapper
 from lm_eval import evaluator, tasks
 from src.models.prepare_models import prepare_models
+from config import EvaluateConfig, ParentModelConfig, TrainedModelConfig
 
-BATCH_SIZE = 8
+BATCH_SIZE = EvaluateConfig.batch_size
 
 def evaluate():
-    eval_tasks: List[str] = ['winogrande','boolq','piqa']
+    eval_tasks: List[str] = EvaluateConfig.eval_tasks
 
-    num_fewshot = 0
-    limit = 256
+    tokenizer = LlamaTokenizer.from_pretrained(ParentModelConfig.pretrained_model_name)
+    tokenizer.pad_token_id = 0
+
+    num_fewshot = EvaluateConfig.num_fewshot
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     child_model, parent_model = prepare_models()
@@ -46,12 +49,8 @@ def evaluate():
 
     print('Child model results: ', results_child)
 
-    model_path = "./open_llama_3b_v2_first_last_step"
-    model = LlamaForCausalLM.from_pretrained(model_path)
-
-    tokenizer=LlamaTokenizer.from_pretrained(
-        model_path,
-    )
+    model = LlamaForCausalLM.from_pretrained(TrainedModelConfig.model_path)
+    tokenizer=LlamaTokenizer.from_pretrained(TrainedModelConfig.model_path)
 
     wrapped_model = ModelWrapper(
         model=model,
